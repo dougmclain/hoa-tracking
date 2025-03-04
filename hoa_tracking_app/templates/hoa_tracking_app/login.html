@@ -1,0 +1,32 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}HOA Tracking - Login{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h3 class="card-title text-center mb-0">Login</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-white text-center">
+                    <p class="mb-0">
+                        Don't have an account? <a href="{% url 'admin:index' %}">Contact your administrator</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

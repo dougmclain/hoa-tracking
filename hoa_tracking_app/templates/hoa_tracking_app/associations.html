@@ -1,0 +1,35 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% block title %}HOA Tracking - Associations{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Your Associations</h1>
+        <a href="{% url 'create_association' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> Create Association
+        </a>
+    </div>
+    
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i> This page is currently under development. Full functionality coming soon!
+    </div>
+    
+    <!-- Placeholder for association list -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Sample Association</h5>
+                    <p class="card-text text-muted">123 Main Street, Anytown, USA</p>
+                    <p class="card-text">
+                        <span class="badge bg-primary">42 Properties</span>
+                        <span class="badge bg-secondary">38 Owners</span>
+                    </p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% load static %}
+{% block title %}HOA Tracking - Home{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    {% if not user.is_authenticated %}
+        <!-- Hero section for non-authenticated users -->
+        <div class="row align-items-center hero-section py-5">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Simplify Your HOA Management</h1>
+                <p class="lead mb-4">Track properties, owners, payments, and more with our comprehensive homeowners association management platform.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 me-md-2">Get Started</a>
+                    <a href="{% url 'about' %}" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Features section -->
+        <div class="row mt-5 pt-5 border-top">
+            <div class="col-12 text-center mb-4">
+                <h2>Why Choose HOA Tracking?</h2>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-tachometer-alt fa-3x mb-3" style="color: var(--bm-green)"></i>
+                    <h4>Easy Management</h4>
+                    <p>Intuitive dashboard to manage all your association needs in one place.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3" style="color: var(--bm-purple)"></i>
+                    <h4>Financial Tracking</h4>
+                    <p>Keep track of dues, payments, and financial status with detailed reports.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-users-cog fa-3x mb-3" style="color: var(--bm-blue)"></i>
+                    <h4>Community Focused</h4>
+                    <p>Tools designed to help build and maintain thriving communities.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Dashboard for authenticated users -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">Welcome back, {{ user.first_name|default:user.username }}</h2>
+                        <p class="card-text">Manage your homeowners associations and keep track of important information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick action cards -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-home fa-3x mb-3" style="color: var(--bm-green)"></i>
+                        <h5 class="card-title">Manage Properties</h5>
+                        <p>Add, edit and track properties in your association.</p>
+                        <a href="{% url 'properties' %}" class="btn btn-primary">View Properties</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-3x mb-3" style="color: var(--bm-purple)"></i>
+                        <h5 class="card-title">Manage Owners</h5>
+                        <p>Keep track of property owners and their contact information.</p>
+                        <a href="{% url 'owners' %}" class="btn btn-primary">View Owners</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-dollar-sign fa-3x mb-3" style="color: var(--bm-blue)"></i>
+                        <h5 class="card-title">Track Payments</h5>
+                        <p>Monitor dues, payments, and financial status.</p>
+                        <a href="{% url 'payments' %}" class="btn btn-primary">View Payments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tools fa-3x mb-3" style="color: var(--bm-yellow)"></i>
+                        <h5 class="card-title">Maintenance Requests</h5>
+                        <p>Manage community maintenance and repair requests.</p>
+                        <a href="{% url 'maintenance' %}" class="btn btn-primary">View Requests</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-calendar-alt fa-3x mb-3" style="color: var(--bm-green)"></i>
+                        <h5 class="card-title">Meetings</h5>
+                        <p>Schedule and track association meetings and minutes.</p>
+                        <a href="{% url 'meetings' %}" class="btn btn-primary">View Meetings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--bm-purple)"></i>
+                        <h5 class="card-title">Reports</h5>
+                        <p>Generate financial and administrative reports.</p>
+                        <a href="{% url 'reports' %}" class="btn btn-primary">View Reports</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Any additional JavaScript for the home page can go here
+    document.addEventListener('DOMContentLoaded', function() {
+        // For example, you could add animations or interactive elements
+    });
+</script>
+{% endblock %}

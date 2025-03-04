@@ -1,0 +1,80 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% block title %}HOA Tracking - About Us{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row mb-5">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <h1 class="display-4 mb-4">About HOA Tracking</h1>
+            <p class="lead">Simplifying homeowners association management since 2023.</p>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h2>Our Mission</h2>
+            <p>HOA Tracking was founded with a simple mission: to make homeowners association management easier, more transparent, and more efficient for everyone involved.</p>
+            <p>We understand the challenges that come with managing communities and want to provide tools that help association boards, property managers, and homeowners work together more effectively.</p>
+        </div>
+        <div class="col-md-6">
+            <h2>Our Vision</h2>
+            <p>We envision a future where homeowners associations run smoothly with minimal administrative burden, where communication is clear and timely, and where community resources are managed efficiently for the benefit of all residents.</p>
+            <p>HOA Tracking is committed to continually improving our platform to help associations achieve these goals.</p>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2>Our Core Values</h2>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x mb-3" style="color: var(--bm-green)"></i>
+                    <h4>Community First</h4>
+                    <p>We believe strong communities make better places to live. Our tools are designed to foster community engagement.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-unlock-alt fa-3x mb-3" style="color: var(--bm-purple)"></i>
+                    <h4>Transparency</h4>
+                    <p>We promote transparency in HOA operations, finances, and decision-making processes.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-hand-holding-usd fa-3x mb-3" style="color: var(--bm-blue)"></i>
+                    <h4>Efficiency</h4>
+                    <p>We help associations reduce administrative overhead and focus resources where they matter most.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Our Team</h2>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> Team member profiles will be added soon!
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <h2>Get in Touch</h2>
+            <p>Have questions about HOA Tracking? We'd love to hear from you!</p>
+            <a href="{% url 'help' %}" class="btn btn-primary btn-lg mt-3">Contact Us</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
