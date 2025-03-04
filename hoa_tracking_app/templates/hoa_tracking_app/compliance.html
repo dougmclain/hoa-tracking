@@ -1,0 +1,199 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}HOA Tracking - Compliance{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Compliance Tracking</h1>
+        <div>
+            <a href="#" class="btn btn-primary me-2">
+                <i class="fas fa-plus me-2"></i> Add Insurance Policy
+            </a>
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> Add Registration
+            </a>
+        </div>
+    </div>
+    
+    <!-- Expiring Soon Alert Section -->
+    {% if expiring_insurance or expiring_registrations %}
+    <div class="alert alert-warning mb-4">
+        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i> Items Expiring Soon</h4>
+        <hr>
+        {% if expiring_insurance %}
+            <p class="mb-1"><strong>Insurance Policies:</strong></p>
+            <ul class="mb-3">
+                {% for policy in expiring_insurance %}
+                <li>{{ policy.get_policy_type_display }} for {{ policy.association.name }} - Expires on {{ policy.expiration_date }} ({{ policy.days_until_expiration }} days left)</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        {% if expiring_registrations %}
+            <p class="mb-1"><strong>State Registrations:</strong></p>
+            <ul>
+                {% for reg in expiring_registrations %}
+                <li>{{ reg.get_registration_type_display }} for {{ reg.association.name }} - Expires on {{ reg.expiration_date }} ({{ reg.days_until_expiration }} days left)</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Main Content Tabs -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <ul class="nav nav-tabs card-header-tabs" id="complianceTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="insurance-tab" data-bs-toggle="tab" data-bs-target="#insurance" type="button" role="tab" aria-controls="insurance" aria-selected="true">Insurance</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="registration-tab" data-bs-toggle="tab" data-bs-target="#registration" type="button" role="tab" aria-controls="registration" aria-selected="false">State Registrations</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab" aria-controls="notes" aria-selected="false">Compliance Notes</button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="complianceTabsContent">
+                <!-- Insurance Tab -->
+                <div class="tab-pane fade show active" id="insurance" role="tabpanel" aria-labelledby="insurance-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Association</th>
+                                    <th>Policy Type</th>
+                                    <th>Provider</th>
+                                    <th>Policy Number</th>
+                                    <th>Coverage</th>
+                                    <th>Expiration</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for policy in insurance_policies %}
+                                <tr>
+                                    <td>{{ policy.association.name }}</td>
+                                    <td>{{ policy.get_policy_type_display }}</td>
+                                    <td>{{ policy.provider }}</td>
+                                    <td>{{ policy.policy_number }}</td>
+                                    <td>${{ policy.coverage_amount }}</td>
+                                    <td>{{ policy.expiration_date }}</td>
+                                    <td>
+                                        {% if policy.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Expired</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center">No insurance policies found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Registration Tab -->
+                <div class="tab-pane fade" id="registration" role="tabpanel" aria-labelledby="registration-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Association</th>
+                                    <th>Registration Type</th>
+                                    <th>Issuing Authority</th>
+                                    <th>Registration Number</th>
+                                    <th>Issue Date</th>
+                                    <th>Expiration</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reg in state_registrations %}
+                                <tr>
+                                    <td>{{ reg.association.name }}</td>
+                                    <td>{{ reg.get_registration_type_display }}</td>
+                                    <td>{{ reg.issuing_authority }}</td>
+                                    <td>{{ reg.registration_number }}</td>
+                                    <td>{{ reg.issue_date }}</td>
+                                    <td>{{ reg.expiration_date|default:"N/A" }}</td>
+                                    <td>
+                                        {% if reg.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Expired</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center">No state registrations found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Notes Tab -->
+                <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+                    {% if compliance_notes %}
+                        {% for note in compliance_notes %}
+                        <div class="card mb-3">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">{{ note.title }}</h5>
+                                <small class="text-muted">{{ note.created_at|date:"M d, Y" }}</small>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ note.association.name }}</h6>
+                                <p class="card-text">{{ note.description }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Added by: {{ note.created_by.get_full_name|default:note.created_by.username }}</small>
+                                    <div>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                        <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted">No compliance notes found</p>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i> Add Note
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

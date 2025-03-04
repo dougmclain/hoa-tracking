@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
+# hoa_tracking_app/views.py
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import Association
+from .forms import AssociationForm
 
 def home(request):
     """Home page view, serves as dashboard for authenticated users."""
@@ -10,14 +13,39 @@ def home(request):
 @login_required
 def associations(request):
     """View all associations the user has access to."""
-    # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/associations.html')
+    associations_list = Association.objects.all().order_by('name')
+    return render(request, 'hoa_tracking_app/associations.html', {'associations': associations_list})
 
 @login_required
 def create_association(request):
     """Create a new homeowners association."""
-    # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/create_association.html')
+    if request.method == 'POST':
+        form = AssociationForm(request.POST)
+        if form.is_valid():
+            association = form.save()
+            messages.success(request, f"Association '{association.name}' created successfully!")
+            return redirect('associations')
+    else:
+        form = AssociationForm()
+    
+    return render(request, 'hoa_tracking_app/create_association.html', {'form': form})
+
+@login_required
+def association_detail(request, association_id):
+    """View details of a specific association."""
+    association = get_object_or_404(Association, id=association_id)
+    insurance_policies = association.insurance_policies.all().order_by('expiration_date')
+    state_registrations = association.state_registrations.all().order_by('expiration_date')
+    compliance_notes = association.compliance_notes.all().order_by('-created_at')
+    
+    context = {
+        'association': association,
+        'insurance_policies': insurance_policies,
+        'state_registrations': state_registrations,
+        'compliance_notes': compliance_notes,
+    }
+    
+    return render(request, 'hoa_tracking_app/association_detail.html', context)
 
 # Property Management Views
 @login_required
@@ -26,33 +54,12 @@ def properties(request):
     # This is a placeholder - we'll implement this view later
     return render(request, 'hoa_tracking_app/properties.html')
 
-# Owner Management Views
+# Board Member Management Views  
 @login_required
-def owners(request):
-    """View and manage property owners."""
+def board(request):
+    """View and manage board member information."""
     # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/owners.html')
-
-# Financial Management Views
-@login_required
-def payments(request):
-    """View and manage payments and dues."""
-    # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/payments.html')
-
-# Maintenance Management Views
-@login_required
-def maintenance(request):
-    """View and manage maintenance requests."""
-    # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/maintenance.html')
-
-# Meeting Management Views
-@login_required
-def meetings(request):
-    """View and manage association meetings."""
-    # This is a placeholder - we'll implement this view later
-    return render(request, 'hoa_tracking_app/meetings.html')
+    return render(request, 'hoa_tracking_app/board.html')
 
 # Report Views
 @login_required

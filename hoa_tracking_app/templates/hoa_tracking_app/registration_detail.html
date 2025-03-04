@@ -1,0 +1,85 @@
+{% extends "hoa_tracking_app/base.html" %}
+{% block title %}HOA Tracking - Registration Details{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h2 class="card-title mb-0">Registration Details</h2>
+                    <div>
+                        <a href="{% url 'association_detail' registration.association.id %}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i> Back
+                        </a>
+                        <a href="{% url 'edit_registration' registration.id %}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-edit me-1"></i> Edit
+                        </a>
+                        <a href="{% url 'delete_registration' registration.id %}" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash me-1"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Association</h5>
+                            <p>{{ registration.association.name }}</p>
+                            
+                            <h5>Registration Type</h5>
+                            <p>{{ registration.get_registration_type_display }}</p>
+                            
+                            <h5>Issuing Authority</h5>
+                            <p>{{ registration.issuing_authority }}</p>
+                            
+                            <h5>Registration Number</h5>
+                            <p>{{ registration.registration_number }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Issue Date</h5>
+                            <p>{{ registration.issue_date }}</p>
+                            
+                            <h5>Expiration Date</h5>
+                            <p>{{ registration.expiration_date|default:"N/A" }}</p>
+                            
+                            <h5>Status</h5>
+                            <p>
+                                {% if registration.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-danger">Expired</span>
+                                {% endif %}
+                                
+                                {% if registration.days_until_expiration %}
+                                    {% if registration.days_until_expiration > 0 %}
+                                    <span class="text-muted">(Expires in {{ registration.days_until_expiration }} days)</span>
+                                    {% elif registration.days_until_expiration == 0 %}
+                                    <span class="text-danger">(Expires today!)</span>
+                                    {% else %}
+                                    <span class="text-danger">(Expired {{ registration.days_until_expiration|abs }} days ago)</span>
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% if registration.notes %}
+                    <div>
+                        <h5>Notes</h5>
+                        <p>{{ registration.notes }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if registration.registration_document %}
+                    <div>
+                        <h5>Document</h5>
+                        <p><a href="{{ registration.registration_document.url }}" target="_blank" class="btn btn-sm btn-outline-primary">View Document</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

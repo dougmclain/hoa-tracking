@@ -10,25 +10,32 @@
         </a>
     </div>
     
+    {% if not associations %}
     <div class="alert alert-info">
-        <i class="fas fa-info-circle me-2"></i> This page is currently under development. Full functionality coming soon!
+        <i class="fas fa-info-circle me-2"></i> No associations found. Create your first association using the button above.
     </div>
+    {% endif %}
     
-    <!-- Placeholder for association list -->
+    <!-- Association list -->
     <div class="row">
+        {% for association in associations %}
         <div class="col-md-4 mb-4">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Sample Association</h5>
-                    <p class="card-text text-muted">123 Main Street, Anytown, USA</p>
-                    <p class="card-text">
-                        <span class="badge bg-primary">42 Properties</span>
-                        <span class="badge bg-secondary">38 Owners</span>
-                    </p>
-                    <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <h5 class="card-title">{{ association.name }}</h5>
+                    <p class="card-text text-muted">{{ association.address }}, {{ association.city }}, {{ association.state }} {{ association.zip_code }}</p>
+                    {% if association.description %}
+                    <p class="card-text">{{ association.description|truncatechars:100 }}</p>
+                    {% endif %}
+                </div>
+                <!-- In associations.html, update the card footer to link to the detail view -->
+                <div class="card-footer bg-white">
+                    <a href="{% url 'association_detail' association.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 

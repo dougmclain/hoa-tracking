@@ -62,6 +62,7 @@
         </div>
         
         <!-- Quick action cards -->
+        <!-- Quick action cards -->
         <div class="row mb-4">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
@@ -76,52 +77,42 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
-                        <i class="fas fa-users fa-3x mb-3" style="color: var(--bm-purple)"></i>
-                        <h5 class="card-title">Manage Owners</h5>
-                        <p>Keep track of property owners and their contact information.</p>
-                        <a href="{% url 'owners' %}" class="btn btn-primary">View Owners</a>
+                        <i class="fas fa-clipboard-check fa-3x mb-3" style="color: var(--bm-purple)"></i>
+                        <h5 class="card-title">Compliance Tracking</h5>
+                        <p>Monitor insurance, state registrations, and licensing requirements.</p>
+                        <a href="{% url 'compliance' %}" class="btn btn-primary">View Compliance</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
-                        <i class="fas fa-dollar-sign fa-3x mb-3" style="color: var(--bm-blue)"></i>
-                        <h5 class="card-title">Track Payments</h5>
-                        <p>Monitor dues, payments, and financial status.</p>
-                        <a href="{% url 'payments' %}" class="btn btn-primary">View Payments</a>
+                        <i class="fas fa-calendar-alt fa-3x mb-3" style="color: var(--bm-blue)"></i>
+                        <h5 class="card-title">Meetings</h5>
+                        <p>Schedule and track association meetings and minutes.</p>
+                        <a href="https://hoa-board-minutes.onrender.com/" class="btn btn-primary" target="_blank">View Meetings</a>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
-                        <i class="fas fa-tools fa-3x mb-3" style="color: var(--bm-yellow)"></i>
-                        <h5 class="card-title">Maintenance Requests</h5>
-                        <p>Manage community maintenance and repair requests.</p>
-                        <a href="{% url 'maintenance' %}" class="btn btn-primary">View Requests</a>
+                        <i class="fas fa-id-card fa-3x mb-3" style="color: var(--bm-green)"></i>
+                        <h5 class="card-title">Board Members</h5>
+                        <p>Manage board member information and term tracking.</p>
+                        <a href="{% url 'board' %}" class="btn btn-primary">View Board</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="fas fa-calendar-alt fa-3x mb-3" style="color: var(--bm-green)"></i>
-                        <h5 class="card-title">Meetings</h5>
-                        <p>Schedule and track association meetings and minutes.</p>
-                        <a href="{% url 'meetings' %}" class="btn btn-primary">View Meetings</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
                         <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--bm-purple)"></i>
                         <h5 class="card-title">Reports</h5>
-                        <p>Generate financial and administrative reports.</p>
+                        <p>Generate compliance and administrative reports.</p>
                         <a href="{% url 'reports' %}" class="btn btn-primary">View Reports</a>
                     </div>
                 </div>

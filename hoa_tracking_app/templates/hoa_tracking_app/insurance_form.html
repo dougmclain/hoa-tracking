@@ -1,6 +1,6 @@
 {% extends "hoa_tracking_app/base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}HOA Tracking - Create Association{% endblock %}
+{% block title %}HOA Tracking - {{ title }}{% endblock %}
 {% block content %}
 
 <div class="container mt-4">
@@ -8,16 +8,16 @@
         <div class="col-lg-8 offset-lg-2">
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
-                    <h2 class="card-title mb-0">Create New Association</h2>
+                    <h2 class="card-title mb-0">{{ title }}</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <a href="{% url 'associations' %}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Create Association</button>
+                            <a href="{% url 'compliance' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">{{ submit_text }}</button>
                         </div>
                     </form>
                 </div>
